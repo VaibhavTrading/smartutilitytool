@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Studio – Scanned Document Enhancement & Perspective Correction | MONU COMPUTERS</title>
+    <meta name="description" content="Enhance scanned documents, fix perspective distortion with OpenCV.js quad warping, remove shadows, adjust contrast, and export clean A4 prints or multi-page PDFs." />
+    <link rel="canonical" href="https://YOUR_DOMAIN_HERE/document-studio" />
+    
+    <!-- OpenGraph Metadata -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="MONU COMPUTERS" />
+    <meta property="og:title" content="Document Studio – Scanned Document Enhancement & Perspective Correction | MONU COMPUTERS" />
+    <meta property="og:description" content="Enhance scanned documents, fix perspective distortion with OpenCV.js quad warping, remove shadows, adjust contrast, and export clean A4 prints or multi-page PDFs." />
+    <meta property="og:url" content="https://YOUR_DOMAIN_HERE/document-studio" />
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Document Studio – Scanned Document Enhancement & Perspective Correction | MONU COMPUTERS" />
+    <meta name="twitter:description" content="Enhance scanned documents, fix perspective distortion with OpenCV.js quad warping, remove shadows, adjust contrast, and export clean A4 prints or multi-page PDFs." />
+
+    <!-- Schema.org Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://YOUR_DOMAIN_HERE/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Document Studio",
+              "item": "https://YOUR_DOMAIN_HERE/document-studio"
+            }
+          ]
+        },
+        {
+          "@type": "WebApplication",
+          "name": "Document Studio by MONU COMPUTERS",
+          "url": "https://YOUR_DOMAIN_HERE/document-studio",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "All",
+          "description": "In-browser document scanner with 4-corner OpenCV perspective correction, shadow removal, adaptive thresholding, and A4 print export.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "HowTo",
+          "name": "How to Enhance and Perspective-Correct Scanned Documents",
+          "description": "Step-by-step tutorial to transform photographed paperwork into clean, print-ready digital scans using MONU COMPUTERS Document Studio.",
+          "step": [
+            { "@type": "HowToStep", "name": "Upload Document", "text": "Upload a photo or PDF of your document via drag-and-drop or file selection." },
+            { "@type": "HowToStep", "name": "Align Corners", "text": "Drag the 4 corner handles over the paper boundaries to fix perspective distortion." },
+            { "@type": "HowToStep", "name": "Rotate if Needed", "text": "Correct orientation by rotating 90, 180, or 270 degrees." },
+            { "@type": "HowToStep", "name": "Choose Filter", "text": "Select Black and White thresholding, Grayscale, Color, or Sharpen." },
+            { "@type": "HowToStep", "name": "Remove Shadows", "text": "Activate shadow suppression to normalize uneven background lighting." },
+            { "@type": "HowToStep", "name": "Tune Sliders", "text": "Adjust Contrast, Brightness, Saturation, and Sharpness sliders." },
+            { "@type": "HowToStep", "name": "Preview Output", "text": "Inspect the live transformed output on the enhanced canvas." },
+            { "@type": "HowToStep", "name": "Print A4 Sheet", "text": "Preview and print directly onto standard A4 paper with scale calibration." },
+            { "@type": "HowToStep", "name": "Export Image or PDF", "text": "Download the enhanced image or compile all pages into a multi-page PDF." }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <!-- PWA & Offline Support -->
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="theme-color" content="#4338ca">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="MONU Studio">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="/icon.svg">
+
+    <!-- External Client Libraries: OpenCV.js, jsPDF, PDF.js with graceful error handling -->
+    <script src="/site-config.js"></script>
+    <script src="https://docs.opencv.org/4.5.4/opencv.js" type="text/javascript" onerror="console.warn('OpenCV.js CDN failed to load.'); window._cvLoadError = true;"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" onerror="console.warn('jsPDF CDN failed to load.'); window._jspdfLoadError = true;"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js" onerror="console.warn('PDF.js CDN failed to load.'); window._pdfjsLoadError = true;"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+<link rel="manifest" href="/manifest.webmanifest"></head>
+<body>
+<div class="dashboard">
+
+    <!-- UNIVERSAL WEBSITE NAVIGATION HEADER -->
+    <header class="site-header">
+        <div class="site-nav-container">
+            <a href="/" class="site-brand" data-link title="MONU COMPUTERS Home">
+                <div class="site-logo-icon">💻</div>
+                <div class="site-brand-text">
+                    <h1>MONU COMPUTERS</h1>
+                    <span>Free Online Image Editing & Document Tools</span>
+                </div>
+            </a>
+            
+            <nav aria-label="Main Navigation">
+                <ul class="site-nav-links">
+                    <li><a href="/" class="site-nav-link" data-link>Home</a></li>
+                    <li><a href="/document-studio" class="site-nav-link active" data-link>Document Studio</a></li>
+                    <li><a href="/id-card-studio" class="site-nav-link" data-link>ID Card Studio</a></li>
+                    <li><a href="/image-pdf-editor" class="site-nav-link" data-link>Image & PDF Editor</a></li>
+                    <li><a href="/about-us" class="site-nav-link" data-link>About Us</a></li>
+                    <li><a href="/contact-us" class="site-nav-link" data-link>Contact Us</a></li>
+                </ul>
+            </nav>
+
+            <div class="site-nav-actions">
+                <div id="site-nav-session-mount"></div>
+                <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu">
+                    ☰
+                </button>
+            </div>
+        </div>
+
+        <div class="mobile-nav-drawer" id="mobileNavDrawer">
+            <a href="/" class="site-nav-link" data-link>🏠 Home</a>
+            <a href="/document-studio" class="site-nav-link active" data-link>📄 Document Studio</a>
+            <a href="/id-card-studio" class="site-nav-link" data-link>🪪 ID Card Studio</a>
+            <a href="/image-pdf-editor" class="site-nav-link" data-link>🖼️ Image & PDF Editor</a>
+            <a href="/about-us" class="site-nav-link" data-link>ℹ️ About Us</a>
+            <a href="/contact-us" class="site-nav-link" data-link>✉️ Contact Us</a>
+        </div>
+    </header>
+
+    <!-- DOCUMENT STUDIO CONTENT -->
+    <main class="page-view" id="page-doc-studio">
+        <div class="tool-page-layout-wrapper">
+            <aside class="side-ad-space left-ad" aria-label="Advertisement">
+                <div class="adsense-card skyscraper"></div>
+            </aside>
+
+            <div class="central-tool-content">
+                <!-- Tool Header -->
+                <div class="tool-hero">
+                    <div class="container-wide">
+                        <div class="breadcrumb-nav">
+                            <a href="/" class="breadcrumb-link" data-link>Home</a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span class="breadcrumb-current">Document Studio</span>
+                        </div>
+                        <div class="tool-hero-content">
+                            <span class="section-tag">Document Scanning & Enhancement</span>
+                            <h2 class="section-title">Document Studio</h2>
+                            <p class="section-subtitle">
+                                Turn camera snapshots into crisp, flat, professionally enhanced digital scans. Perform 4-corner perspective warping, shadow removal, thresholding, and A4 print layout directly in your browser with selected offline capabilities.
+                            </p>
+                            <div class="tool-hero-actions">
+                                <button type="button" class="btn-primary-hero" onclick="MonuRouter.openStudioWorkspace('DOC')">
+                                    <span>🚀 Open Document Studio Workspace</span>
+                                </button>
+                                <a href="#doc-tutorial" class="btn-secondary-hero">
+                                    <span>📖 Jump to Step-by-Step Guide</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AdSense Placeholder -->
+                <div class="adsense-wrapper">
+            <div class="adsense-card leaderboard"></div>
+        </div>
+
+                
+                <!-- Section 3: ACTUAL WORKING TOOL -->
+                <section class="tool-live-section" id="tool-stage-doc" aria-label="Document Studio Live Working Editor">
+                    <!-- Shared Studio Workspace mounted here -->
+                </section>
+
+                <div class="adsense-wrapper">
+            <div class="adsense-card tool-bottom-ad leaderboard"></div>
+        </div>
+
+                <!-- Features Overview -->
+                <section class="section-wrapper">
+                    <div class="container-wide">
+                        <div class="section-header">
+                            <span class="section-tag">Implemented Features</span>
+                            <h2 class="section-title">Everything Built Into Document Studio</h2>
+                            <p class="section-subtitle">Real, working capabilities engineered to give you scanner-quality documents right inside your browser.</p>
+                        </div>
+
+                        <div class="info-grid-3">
+                            <div class="info-box">
+                                <div class="info-box-icon">📐</div>
+                                <h4>4-Corner Perspective Quad</h4>
+                                <p>Drag Top-Left, Top-Right, Bottom-Right, and Bottom-Left handles over paper edges. OpenCV computes homography matrix for flat rendering.</p>
+                            </div>
+                            <div class="info-box">
+                                <div class="info-box-icon">🎨</div>
+                                <h4>4 Filter Modes</h4>
+                                <p>Switch between B/W binary thresholding, smooth Grayscale, original Color preservation, and Unsharp Mask sharpening.</p>
+                            </div>
+                            <div class="info-box">
+                                <div class="info-box-icon">☁️</div>
+                                <h4>Shadow Removal Filter</h4>
+                                <p>Suppresses background gradients caused by room lighting, hands, or camera hardware, rendering an even white page background.</p>
+                            </div>
+                            <div class="info-box">
+                                <div class="info-box-icon">🎛️</div>
+                                <h4>4 Precision Sliders</h4>
+                                <p>Live tuning for Contrast (1.0 to 3.0), Brightness (-200 to 0), Saturation (0.0 to 3.0), and Sharpness (0.0 to 2.0).</p>
+                            </div>
+                            <div class="info-box">
+                                <div class="info-box-icon">🔄</div>
+                                <h4>Orientation & Zoom</h4>
+                                <p>Rotate document 0°, 90°, 180°, or 270°. Smooth mouse wheel zooming and click-and-drag panning on original and output canvases.</p>
+                            </div>
+                            <div class="info-box">
+                                <div class="info-box-icon">🖨️</div>
+                                <h4>A4 Sheet Print & PDF Batch</h4>
+                                <p>Direct A4 preview modal with scaling slider. Export single page image with custom name or compile all gallery pages into a multi-page PDF.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Step-by-Step Tutorial -->
+                <section class="section-wrapper bg-light" id="doc-tutorial">
+                    <div class="container-narrow">
+                        <div class="section-header">
+                            <span class="section-tag">Step-by-Step Guide</span>
+                            <h2 class="section-title">How to Use Document Studio</h2>
+                            <p class="section-subtitle">Follow this 10-step guide to get clean, professional document scans from any camera photo.</p>
+                        </div>
+
+                        <div class="tutorial-container">
+                            <div class="step-card">
+                                <div class="step-number-badge">1</div>
+                                <div class="step-content">
+                                    <h4>Open Document Studio & Upload Your File</h4>
+                                    <p>Click "Click or Drop Files" in the left sidebar or drag your image/PDF file directly onto the workspace. You can upload multiple files at once; they will appear in the right-hand Gallery roll.</p>
+                                    <div class="step-tip">💡 Tip: You can upload smartphone photos (JPG, PNG, WEBP) or existing PDF documents.</div>
+                                </div>
+                            </div>
+
+                            <div class="step-card">
+                                <div class="step-number-badge">2</div>
+                                <div class="step-content">
+                                    <h4>Align 4-Corner Perspective Anchors</h4>
+                                    <p>Look at the "Original" canvas on the left. You will see 4 blue circular corner handles (TL, TR, BR, BL). Click and drag each handle to align with the four physical corners of your paper document. The cyan dotted polygon marks the active crop zone.</p>
+                                    <div class="step-tip">💡 Tip: Use your mouse wheel to zoom into corners for sub-pixel alignment precision.</div>
+                                </div>
+                            </div>
+
+                            <div class="step-card">
+                                <div class="step-number-badge">3</div>
+                                <div class="step-content">
+                                    <h4>Adjust Rotation if Necessary</h4>
+                                    <p>If your photo was taken in landscape or upside down, use the Rotation dropdown in the sidebar to rotate by 90°, 180°, or 270°.</p>
+                                </div>
+                            </div>
+
+                            <div class="step-card">
+                                <div class="step-number-badge">4</div>
+                                <div class="step-content">
+                                    <h4>Select Your Desired Filter Mode</h4>
+                                    <p>Choose from the 4 filter buttons: B/W (ideal for text documents and forms), Grayscale (recommended for certificates with stamps and photos), Color (keeps original tones), or Sharpen (adds edge contrast).</p>
+                                </div>
+                            </div>
+
+                            <div class="step-card">
+                                <div class="step-number-badge">5</div>
+                                <div class="step-content">
+                                    <h4>Toggle Shadow Removal</h4>
+                                    <p>If parts of your page have harsh dark shadows caused by room lighting, click the "Shadows: Off" button to activate shadow suppression. The algorithm normalizes luminance across the paper.</p>
+                                </div>
+                            </div>
+
+                            <div class="step-card">
+                                <div class="step-number-badge">6</div>
+                                <div class="step-content">
+                                    <h4>Fine-Tune Contrast & Brightness</h4>
+                                    <p>Use the Contrast slider to make dark text bolder and the Brightness slider to push grayish paper back to clean white.</p>
+                                </div>
+                            </div>
+
+                            <div class="step-card">
+                                <div class="step-number-badge">7</div>
+                                <div class="step-content">
+                                    <h4>Adjust Saturation & Sharpness</h4>
+                                    <p>If keeping color, tweak Saturation. Adjust Sharpness to enhance character edge definition for higher optical clarity.</p>
+                                </div>
+                            </div>
+
+                            <div class="step-card">
+                                <div class="step-number-badge">8</div>
+                                <div class="step-content">
+                                    <h4>Inspect Enhanced Output Preview</h4>
+                                    <p>Examine the "Enhanced Output" screen on the right. Any slider movement or corner repositioning updates the live render immediately.</p>
+                                </div>
+                            </div>
+
+                            <div class="step-card">
+                                <div class="step-number-badge">9</div>
+                                <div class="step-content">
+                                    <h4>Trigger A4 Sheet Print</h4>
+                                    <p>Click "Print A4 Sheet". A modal will open displaying your enhanced document centered on a true A4 page (210 × 297 mm) with a scale offset slider. Click "Trigger System Print" to print.</p>
+                                </div>
+                            </div>
+
+                            <div class="step-card">
+                                <div class="step-number-badge">10</div>
+                                <div class="step-content">
+                                    <h4>Download Image or PDF</h4>
+                                    <p>Click "Download Image" to open the filename modal, select your extension (JPG, PNG, WEBP, PDF), and save. Click "Download PDF" to compile all gallery pages into a clean, multi-page PDF.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="text-align: center; margin-top: 36px;">
+                            <button type="button" class="btn-primary-hero" onclick="MonuRouter.openStudioWorkspace('DOC')">
+                                <span>Launch Document Studio Workspace Now ➔</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Document Studio FAQs -->
+                <section class="section-wrapper">
+                    <div class="container-narrow">
+                        <div class="section-header">
+                            <span class="section-tag">Help & FAQs</span>
+                            <h2 class="section-title">Document Studio FAQs</h2>
+                        </div>
+
+                        <div class="faq-list">
+                            <div class="faq-item active">
+                                <button type="button" class="faq-question-btn" aria-expanded="true">
+                                    <span>How accurate is the perspective correction?</span>
+                                    <span class="faq-toggle-icon">▼</span>
+                                </button>
+                                <div class="faq-answer-pane">
+                                    <p>Perspective correction uses OpenCV.js <code>cv.getPerspectiveTransform</code> and <code>cv.warpPerspective</code>. It maps any quadrilateral quad precisely to a standard rectangular plane with mathematical accuracy.</p>
+                                </div>
+                            </div>
+
+                            <div class="faq-item">
+                                <button type="button" class="faq-question-btn" aria-expanded="false">
+                                    <span>Can I batch optimize multiple document pages?</span>
+                                    <span class="faq-toggle-icon">▼</span>
+                                </button>
+                                <div class="faq-answer-pane">
+                                    <p>Yes. When multiple pages are in your gallery, clicking "Optimize All Pages" processes every uploaded document with your current filter and tuning configuration.</p>
+                                </div>
+                            </div>
+
+                            <div class="faq-item">
+                                <button type="button" class="faq-question-btn" aria-expanded="false">
+                                    <span>Can I transfer my enhanced document directly into the Image Editor?</span>
+                                    <span class="faq-toggle-icon">▼</span>
+                                </button>
+                                <div class="faq-answer-pane">
+                                    <p>Yes. The top header includes an "Open in Editor ➔" button that transfers your active enhanced document into the Image & PDF Editor without downloading or re-uploading.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <aside class="side-ad-space right-ad" aria-label="Advertisement">
+                <div class="adsense-card skyscraper"></div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- UNIVERSAL WEBSITE FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h2>MONU COMPUTERS</h2>
+                    <p>Free, private, browser-based online tools for scanned document enhancement, dual-slot ID card print framing, image compression, resizing, format conversion, and PDF management.</p>
+                    <div class="footer-badge">
+                        <span>🛡️ In-Browser Processing & Selected Offline Support</span>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Our Tools</h3>
+                    <ul class="footer-nav-list">
+                        <li><a href="/document-studio" class="footer-link" data-link>Document Studio</a></li>
+                        <li><a href="/id-card-studio" class="footer-link" data-link>ID Card Studio</a></li>
+                        <li><a href="/image-pdf-editor" class="footer-link" data-link>Image & PDF Editor</a></li>
+                        <li><a href="/document-studio#doc-tutorial" class="footer-link" data-link>Scanner Tutorial</a></li>
+                        <li><a href="/id-card-studio#id-tutorial" class="footer-link" data-link>ID Print Guide</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Legal & Privacy</h3>
+                    <ul class="footer-nav-list">
+                        <li><a href="/privacy-policy" class="footer-link" data-link>Privacy Policy</a></li>
+                        <li><a href="/terms-and-conditions" class="footer-link" data-link>Terms and Conditions</a></li>
+                        <li><a href="/copyright-policy" class="footer-link" data-link>Copyright Policy</a></li>
+                        <li><a href="/disclaimer" class="footer-link" data-link>Disclaimer</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Support & Help</h3>
+                    <ul class="footer-nav-list">
+                        <li><a href="/about-us" class="footer-link" data-link>About Us</a></li>
+                        <li><a href="/contact-us" class="footer-link" data-link>Contact Us</a></li>
+                        <li><a href="/#explore-tools" class="footer-link" data-link>Explore Tools</a></li>
+                        <li><a href="mailto:vaibhav.dewangan499@gmail.com">vaibhav.dewangan499@gmail.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div>
+                    © <span id="current-year">2026</span> <strong>MONU COMPUTERS</strong>. All Rights Reserved.
+                </div>
+                <div style="display: flex; gap: 16px;">
+                    <a href="/privacy-policy" class="footer-link" data-link>Privacy</a>
+                    <a href="/terms-and-conditions" class="footer-link" data-link>Terms</a>
+                    <a href="/disclaimer" class="footer-link" data-link>Disclaimer</a>
+                    <a href="/contact-us" class="footer-link" data-link>Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+<!-- Studio Workspace Modal & Interactive Canvases -->
+<div id="shared-studio-store" style="display:none;">
+        <div id="shared-studio-workspace" class="tool-embed-wrapper">
+
+        <!-- Document Studio & ID Card Studio Grid -->
+        <main class="app-grid" id="enhancer-main-workspace">
+            <!-- Bottom Panels Row (Gallery & Saved ID Sets in same row) -->
+            <div class="bottom-panels-wrapper" style="grid-area: gallery; display: flex; gap: 12px; height: 100%; min-height: 0; overflow: hidden;">
+                <!-- Gallery Roll Panel -->
+                <aside class="gallery-panel" style="flex: 1; min-width: 0; height: 100%;" aria-label="Image gallery">
+                    <div class="panel-heading">
+                        <h2>Gallery</h2>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <span class="count-chip" id="gallery-count">0 IMG</span>
+                        </div>
+                    </div>
+                    <div class="gallery-container" id="gallery-strip">
+                        <span style="color: var(--text-muted); font-size: 13px;">No files loaded.</span>
+                    </div>
+                </aside>
+
+                <!-- ID Card Bucket Sets Container -->
+                <div class="bucket-section" id="id-bucket-container" style="display:none; flex: 1; min-width: 0; height: 100%;">
+                    <div class="panel-heading">
+                        <h3>Saved ID Sets</h3>
+                        <span class="count-chip" id="bucket-count">0 Sets</span>
+                    </div>
+                    <div class="bucket-grid" id="bucket-item-row">
+                        <span style="color: var(--text-muted); font-size: 13px;">No saved sets.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Preview Column -->
+            <section class="preview-column" aria-label="Preview workspace">
+                <div class="workspace">
+                    <!-- Screen 1: Source Matrix & Edge Anchors -->
+                    <div class="screen">
+                        <div class="screen-header">
+                            <h2>Original</h2>
+                            <span class="dimension-badge" id="badge-src-dim">Source</span>
+                        </div>
+                        <div class="canvas-viewport" style="background: #ffffff;" id="viewport-src">
+                            <div class="canvas-container" id="container-src" style="display:none;">
+                                <canvas id="canvas-src" style="display:none;"></canvas>
+                                <svg id="crop-svg-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 8; overflow: visible;">
+                                    <polygon id="crop-polygon" points="" fill="rgba(31, 209, 249, 0.08)" stroke="#1fd1f9" stroke-width="2" stroke-dasharray="5,4" />
+                                </svg>
+                                <div id="pt-tl" class="corner-handle handle-tl" style="display:none;" title="Top-Left Corner (Drag to adjust)"></div>
+                                <div id="pt-tr" class="corner-handle handle-tr" style="display:none;" title="Top-Right Corner (Drag to adjust)"></div>
+                                <div id="pt-br" class="corner-handle handle-br" style="display:none;" title="Bottom-Right Corner (Drag to adjust)"></div>
+                                <div id="pt-bl" class="corner-handle handle-bl" style="display:none;" title="Bottom-Left Corner (Drag to adjust)"></div>
+                            </div>
+                            <div id="src-empty-msg" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:24px; color:#64748b; user-select:none; pointer-events:none;">
+                                <div style="font-size:36px; margin-bottom:8px; opacity:0.8;">📄</div>
+                                <h3 id="src-empty-title" style="margin:0 0 6px 0; font-size:14px; font-weight:700; color:#1e293b;">No Document Loaded</h3>
+                                <p id="src-empty-desc" style="margin:0; font-size:12px; color:#64748b;">Click "Click or Drop Files" in the sidebar to upload.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Screen 2: Live Filter Output / Crop Preview -->
+                    <div class="screen">
+                        <div class="screen-header">
+                            <h2 id="screen2-title">Enhanced Output</h2>
+                            <span class="dimension-badge" id="badge-dst-dim">Output</span>
+                        </div>
+                        <div class="canvas-viewport" style="background: #ffffff;" id="viewport-dst">
+                            <!-- Dedicated Document Studio Output Container -->
+                            <div class="canvas-container" id="container-dst">
+                                <canvas id="canvas-dst" style="background-color: #ffffff; display:none;"></canvas>
+                                <div id="doc-dst-empty-msg" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:24px; color:#64748b; user-select:none; pointer-events:none;">
+                                    <div style="font-size:36px; margin-bottom:8px; opacity:0.8;">✨</div>
+                                    <h3 style="margin:0 0 6px 0; font-size:14px; font-weight:700; color:#1e293b;">Document Output View</h3>
+                                    <p style="margin:0; font-size:12px; color:#64748b;">Live perspective-corrected and enhanced document will render here.</p>
+                                </div>
+                            </div>
+                            <!-- Dedicated ID Card Studio Slot Preview Container -->
+                            <div class="canvas-container" id="container-id-dst" style="display:none;">
+                                <canvas id="canvas-id-dst" style="background-color: #ffffff;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Control Panel -->
+            <aside class="control-panel" aria-label="Control panel">
+                <!-- 1. Digital File Source -->
+                <div class="panel-section">
+                    <h3>1. Upload</h3>
+                    <div class="upload-btn" onclick="document.getElementById('file-input').click()">
+                        <span>Click or Drop Files</span>
+                        <input type="file" id="file-input" accept="image/*, application/pdf" multiple style="display:none">
+                    </div>
+                    <div class="side-select-row" id="side-selector-container" style="display:none;">
+                        <button class="btn-assign" id="btn-assign-left" onclick="assignCroppedToSide('left')">Send to Slot 1</button>
+                        <button class="btn-assign" id="btn-assign-right" onclick="assignCroppedToSide('right')">Send to Slot 2</button>
+                    </div>
+                </div>
+                
+                <!-- 2. Orientation, Auto-Detect & Filters -->
+                <div class="panel-section">
+                    <h3>2. Enhancement</h3>
+
+                    <div class="control-group">
+                        <div class="control-label"><span>Rotation</span></div>
+                        <select id="control-rotation" onchange="rotateActiveImage()">
+                            <option value="0">0° (Default)</option>
+                            <option value="90">90° Clockwise</option>
+                            <option value="180">180° Inverted</option>
+                            <option value="270">270° Counter-Clockwise</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group" id="group-id-orientation" style="display:none; margin-top:12px;">
+                        <div class="control-label"><span>ID Orientation</span></div>
+                        <select id="control-id-orientation" onchange="drawIDPreviewComposite()">
+                            <option value="H">Horizontal (85.6 × 53.98 mm)</option>
+                            <option value="V">Vertical (53.98 × 85.6 mm)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="button-grid" style="margin-top: 14px;">
+                        <div class="effect-toggle-row">
+                            <button class="btn btn-accent active" id="btn-effect-grayscale" disabled onclick="setFilterMode('GRAYSCALE')">Grayscale</button>
+                            <button class="btn btn-accent" id="btn-effect-color" disabled onclick="setFilterMode('COLOR')">Color</button>
+                            <button class="btn btn-shadow-removal" id="btn-shadow-removal" disabled onclick="toggleShadowRemoval()">Shadows: Off</button>
+                        </div>                      
+                        <button class="btn btn-purple" id="btn-save-bucket" style="display:none;" disabled onclick="saveCurrentPairToBucket()">Save Pair to Sets</button>
+                        <button class="btn btn-main" id="btn-optimize-all" disabled onclick="processAllImages()">Optimize All Pages</button>
+                    </div>
+                </div>
+                
+                <!-- 3. Advanced Scanner Tuning Sliders -->
+                <div class="panel-section">
+                    <h3>3. Tuning</h3>
+                    <div class="control-group">
+                        <div class="control-label"><span>Contrast</span><span id="val-contrast">1.6</span></div>
+                        <input type="range" id="slider-contrast" min="1.0" max="3.0" step="0.1" value="1.6" oninput="updateSlidersLive()">
+                    </div>
+                    <div class="control-group">
+                        <div class="control-label"><span>Brightness</span><span id="val-brightness">-135</span></div>
+                        <input type="range" id="slider-brightness" min="-200" max="0" step="5" value="-135" oninput="updateSlidersLive()">
+                    </div>
+                    <div class="control-group">
+                        <div class="control-label"><span>Saturation</span><span id="val-saturation">1.0</span></div>
+                        <input type="range" id="slider-saturation" min="0.0" max="3.0" step="0.1" value="1.0" oninput="updateSlidersLive()">
+                    </div>
+                    <div class="control-group">
+                        <div class="control-label"><span>Sharpness</span><span id="val-sharpness">0.0</span></div>
+                        <input type="range" id="slider-sharpness" min="0.0" max="2.0" step="0.2" value="0.0" oninput="updateSlidersLive()">
+                    </div>
+                </div>
+                
+                <!-- 4. Export & Print Controls -->
+                <div class="panel-section" id="export-doc-section">
+                    <h3>4. Export & Print</h3>
+                    <div class="button-grid">
+                        <button class="btn btn-main" id="btn-print-doc" disabled onclick="printScannedDocument()">Print A4 Sheet</button>
+                        <button class="btn btn-success" id="btn-save-img" disabled onclick="saveAsImage()">Download Image</button>
+                        <button class="btn btn-success" id="btn-save-pdf" disabled onclick="saveAllToPDF()">Download PDF</button>
+                    </div>
+                </div>
+
+                <div class="panel-section" id="export-id-section" style="display:none;">
+                    <h3>4. Print ID Card</h3>
+                    <div class="control-group" style="margin-bottom: 12px;">
+                        <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; cursor: pointer;">
+                            <input type="checkbox" id="check-crop-marks" checked onchange="drawIDPreviewComposite()"> Include Border & Trim Marks
+                        </label>
+                    </div>
+                    <div class="button-grid">
+                        <button class="btn btn-purple" id="btn-print-single" onclick="printIDCards(true)">Print Single Card</button>
+                        <button class="btn btn-success" id="btn-print-double" onclick="printIDCards(false)">Print Double Card</button>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- INTEGRATED IMAGE & PDF EDITOR STUDIO WORKSPACE -->
+        <div class="editor-workspace" id="editor-main-workspace" style="display: none;">
+            <!-- Subnavigation Toolbar with Studio Tools -->
+            <div class="editor-subnav">
+                <div class="editor-subnav-tools" id="editorSubnavTools">
+                    <button class="editor-tool-tab active" data-tool="compress" onclick="switchTool('compress', this)">🗜️ Compress</button>
+                    <button class="editor-tool-tab" data-tool="resize" onclick="switchTool('resize', this)">📐 Resize</button>
+                    <button class="editor-tool-tab" data-tool="crop" onclick="switchTool('crop', this)">✂️ Crop</button>
+                    <button class="editor-tool-tab" data-tool="convert" onclick="switchTool('convert', this)">🔄 Convert</button>
+                    <button class="editor-tool-tab" data-tool="brightness" onclick="switchTool('brightness', this)">☀️ Adjust Color</button>
+                    <button class="editor-tool-tab" data-tool="watermark" onclick="switchTool('watermark', this)">🖼️ Watermark</button>
+                    <button class="editor-tool-tab" data-tool="img2pdf" onclick="switchTool('img2pdf', this)">🖼️→📄 Images to PDF</button>
+                    <button class="editor-tool-tab" data-tool="pdfcompress" onclick="switchTool('pdfcompress', this)">📄 PDF Optimizer</button>
+                </div>
+                <div class="editor-header-actions" id="editorHeaderActions">
+                    <button class="btn btn-accent" id="undoBtn" disabled onclick="doUndo()" title="Undo action (Ctrl+Z)" style="padding:6px 12px; font-size:12px;">↩ Undo (<span id="undoCount">0</span>)</button>
+                    <button class="btn btn-accent" id="redoBtn" disabled onclick="doRedo()" title="Redo action (Ctrl+Y)" style="padding:6px 12px; font-size:12px;">↪ Redo (<span id="redoCount">0</span>)</button>
+                    <button class="btn btn-accent" id="resetImgBtn" style="display:none; padding:6px 12px; font-size:12px;" onclick="resetEditorImage()" title="Reset image edits to original">↺ Reset</button>
+                    <button class="btn btn-purple" id="changeImgBtn" style="display:none; padding:6px 12px; font-size:12px;" onclick="document.getElementById('editorFileInput').click()" title="Change current image">📁 Change Image</button>
+                    <button class="btn btn-danger" id="deleteImgBtn" style="display:none; padding:6px 12px; font-size:12px; background:#dc2626; color:#fff; border-color:#dc2626;" onclick="deleteEditorImage()" title="Delete active uploaded image">🗑️ Delete</button>
+                </div>
+            </div>
+
+            <!-- Progress Indicator -->
+            <div class="editor-progress-wrap" id="editorProgressWrap">
+                <div class="editor-progress-bar" id="editorProgressBar"></div>
+            </div>
+
+            <!-- Editor Body Grid -->
+            <div class="editor-body-grid">
+                <!-- Left Stage / Canvas Viewport -->
+                <div class="editor-preview-pane" id="editorPreviewPane">
+                    <!-- Default Drag & Drop Upload Zone -->
+                    <div class="editor-upload-zone" id="editorUploadZone" style="margin: auto; display: flex; flex-direction: column; align-items: center; justify-content: center;" onclick="document.getElementById('editorFileInput').click()">
+                        <div style="font-size: 36px; margin-bottom: 8px;">📷</div>
+                        <h3>Upload or Drop Image Here</h3>
+                        <p>Supports PNG, JPG, JPEG, WEBP, BMP, TIFF, SVG</p>
+                        <button class="btn btn-purple" type="button">Select Image from Device</button>
+                        <input type="file" id="editorFileInput" accept="image/*" style="display:none" onchange="loadEditorImg(this)">
+                    </div>
+
+                    <!-- Single High-Res Visual Preview Stage -->
+                    <div class="editor-single-preview" id="editorSinglePreview" style="display:none;">
+                        <img id="livePreviewImg" alt="Main image preview">
+                        <img id="origImg" style="display:none;" alt="Source image cache">
+                    </div>
+
+                    <!-- Precision Crop Interactive Canvas -->
+                    <div class="editor-preview-boxes" id="editorCropCanvasPane" style="display:none; flex-direction:column; align-items:center;">
+                        <div id="cropContainer" class="crop-container">
+                            <img id="cropImgEl" class="crop-img-el" alt="Precision crop editable preview">
+                            <div id="cropRect" class="crop-rect">
+                                <div class="crop-handle" data-h="tl"></div>
+                                <div class="crop-handle" data-h="tm"></div>
+                                <div class="crop-handle" data-h="tr"></div>
+                                <div class="crop-handle" data-h="rm"></div>
+                                <div class="crop-handle" data-h="br"></div>
+                                <div class="crop-handle" data-h="bm"></div>
+                                <div class="crop-handle" data-h="bl"></div>
+                                <div class="crop-handle" data-h="lm"></div>
+                                <div class="crop-info-bar" id="cropInfoBar">0 × 0 px</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image to PDF Left Workspace -->
+                    <div class="editor-preview-boxes" id="i2pLeftStage" style="display:none; flex-direction:column; width:100%; height:100%; gap:12px;">
+                        <!-- Drop Zone for Images -->
+                        <div id="i2pDropZone" class="editor-upload-zone" style="max-width:440px; margin:auto;" onclick="document.getElementById('i2pFileInput').click()">
+                            <div style="font-size:32px; margin-bottom:6px;">🖼️</div>
+                            <h3>Images to PDF</h3>
+                            <p style="margin-bottom:16px;">Upload images to compile into PDF</p>
+                            <button class="btn btn-purple" type="button" style="margin: 0 auto;">Select Images</button>
+                        </div>
+
+                        <!-- 60/40 Split Workspace Container -->
+                        <div id="i2pContentContainer" style="display:none; flex-direction:row; flex:1; width:100%; height:100%; gap:12px; min-height:0;">
+                            <!-- 60% Left Area: Vertical Grid Thumbnails -->
+                            <div style="flex:6; display:flex; flex-direction:column; background:#ffffff; border:1px solid var(--border-light); border-radius:8px; padding:10px; min-height:0; overflow:hidden;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-shrink:0;">
+                                    <span style="font-size:11px; font-weight:800; color:var(--text-dark);" id="i2pCountLabel">Image Sequence & Reordering:</span>
+                                    <div style="display:flex; gap:6px;">
+                                        <button class="btn btn-accent" onclick="rotateAllImg2PdfPages(90)" style="padding:4px 8px; font-size:11px;" title="Rotate All Images 90° Clockwise">⟳ Rotate All</button>
+                                        <button class="btn btn-purple" onclick="document.getElementById('i2pFileInput').click()" style="padding:4px 8px; font-size:11px;">+ Add Images</button>
+                                        <button class="btn btn-accent" id="i2pClearBtn" onclick="clearImg2Pdf()" style="padding:4px 8px; font-size:11px;">Clear All</button>
+                                    </div>
+                                </div>
+                                <div id="img2pdfList" class="thumb-grid-container"></div>
+                            </div>
+                            <!-- 40% Right Area: Selected Page Preview -->
+                            <div style="flex:4; display:flex; flex-direction:column; background:#ffffff; border:1px solid var(--border-light); border-radius:8px; padding:10px; min-height:0; overflow:hidden; position:relative;">
+                                <div style="font-size:11px; font-weight:800; color:var(--text-muted); margin-bottom:6px; flex-shrink:0;">Selected Page Preview:</div>
+                                <div class="i2p-active-view-wrap" style="flex:1; min-height:0; display:flex; align-items:center; justify-content:center; background:#ffffff; border:1px solid var(--border-light); border-radius:6px; padding:8px; overflow:hidden; position:relative; background-image: repeating-conic-gradient(rgba(0,0,0,0.02) 0 25%, #ffffff 0 50%) 0 0/14px 14px;">
+                                    <img id="i2pActivePreview" style="max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; border-radius:4px; box-shadow:0 4px 14px rgba(0,0,0,0.08);" alt="Selected page preview">
+                                    <div id="i2pActiveBadge" style="position:absolute; bottom:8px; left:8px; background:rgba(45,11,30,0.85); color:#ffffff; font-size:10px; font-weight:700; padding:3px 8px; border-radius:4px; max-width:calc(100% - 16px); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Page 1</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PDF Optimizer Left Workspace (Mixed Multi-PDF & Images) -->
+                    <div class="editor-preview-boxes" id="pdfOptLeftStage" style="display:none; flex-direction:column; width:100%; height:100%; gap:12px;">
+                        <!-- Drop Zone for PDF & Images -->
+                        <div id="pdfOptDropZone" class="editor-upload-zone" style="max-width:440px; margin:auto;" onclick="document.getElementById('pdfFileInput').click()">
+                            <div style="font-size:32px; margin-bottom:6px;">📑</div>
+                            <h3>PDF & Images</h3>
+                            <p style="margin-bottom:16px;">Upload PDF & image files to optimize, merge, or reorder</p>
+                            <button class="btn btn-purple" type="button" style="margin: 0 auto;">Select Files</button>
+                            <input type="file" id="pdfFileInput" accept="application/pdf, image/*" multiple style="display:none" onchange="loadPDFOptFiles(this)">
+                        </div>
+
+                        <!-- 60/40 Split Workspace Container -->
+                        <div id="pdfOptContentContainer" style="display:none; flex-direction:row; flex:1; width:100%; height:100%; gap:12px; min-height:0;">
+                            <!-- 60% Left Area: Vertical Grid Thumbnails -->
+                            <div style="flex:6; display:flex; flex-direction:column; background:#ffffff; border:1px solid var(--border-light); border-radius:8px; padding:10px; min-height:0; overflow:hidden;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-shrink:0;">
+                                    <div style="display:flex; align-items:center; gap:6px;">
+                                        <span style="font-size:11px; font-weight:800; color:var(--text-dark);">Document Pages (<span id="pdfOptTotalPages">0</span>):</span>
+                                        <span style="font-size:10px; color:var(--text-muted);">Drag cards to reorder</span>
+                                    </div>
+                                    <div style="display:flex; gap:6px;">
+                                        <button class="btn btn-accent" onclick="rotateAllPdfOptPages(90)" style="padding:4px 8px; font-size:11px;" title="Rotate All Pages 90° Clockwise">⟳ Rotate All</button>
+                                        <button class="btn btn-purple" onclick="document.getElementById('pdfFileInput').click()" style="padding:4px 8px; font-size:11px;">+ Add Files</button>
+                                        <button class="btn btn-accent" id="pdfOptClearBtn" onclick="clearPdfOptPages()" style="padding:4px 8px; font-size:11px;">Clear All</button>
+                                    </div>
+                                </div>
+                                <div id="pdfOptPagesList" class="thumb-grid-container"></div>
+                            </div>
+                            <!-- 40% Right Area: Selected Page Preview -->
+                            <div style="flex:4; display:flex; flex-direction:column; background:#ffffff; border:1px solid var(--border-light); border-radius:8px; padding:10px; min-height:0; overflow:hidden; position:relative;">
+                                <div style="font-size:11px; font-weight:800; color:var(--text-muted); margin-bottom:6px; flex-shrink:0;">Selected Page Preview:</div>
+                                <div class="pdf-active-view-wrap" style="flex:1; min-height:0; display:flex; align-items:center; justify-content:center; background:#ffffff; border:1px solid var(--border-light); border-radius:6px; padding:8px; overflow:hidden; position:relative; background-image: repeating-conic-gradient(rgba(0,0,0,0.02) 0 25%, #ffffff 0 50%) 0 0/14px 14px;">
+                                    <img id="pdfOptActiveImg" style="max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; border-radius:4px; box-shadow:0 4px 14px rgba(0,0,0,0.08);" alt="Active PDF or image page preview">
+                                    <div id="pdfOptActiveBadge" style="position:absolute; bottom:8px; left:8px; background:rgba(45,11,30,0.85); color:#ffffff; font-size:10px; font-weight:700; padding:3px 8px; border-radius:4px; max-width:calc(100% - 16px); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">Page 1</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Controls / Options Tool Pane -->
+                <div class="editor-tool-pane" id="editorToolPane">
+                    <div class="editor-pane-header">
+                        <h2 id="editorToolTitle">🗜️ Compress / Increase Image</h2>
+                        <p id="editorToolDesc">Reduce or enlarge image file size with exact KB targeting & quality control.</p>
+                    </div>
+
+                    <div class="editor-pane-body">
+                        <!-- 1. COMPRESS / INCREASE -->
+                        <div id="c-compress">
+                            <div class="sm-tabs">
+                                <button class="sm-tab active" onclick="setSizeMode('compress', this)">Compress (Reduce KB)</button>
+                                <button class="sm-tab" onclick="setSizeMode('increase', this)">Increase (Enlarge KB)</button>
+                            </div>
+                            <div id="compressMode">
+                                <div class="control-group">
+                                    <div class="control-label"><span>Output Format</span></div>
+                                    <select id="compFmt" onchange="liveCompress()" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light); font-weight:700;">
+                                        <option value="image/jpeg" selected>JPEG (Universal, High Efficiency)</option>
+                                        <option value="image/webp">WEBP (Modern Web Standard)</option>
+                                        <option value="image/png">PNG (Lossless Quality)</option>
+                                    </select>
+                                </div>
+                                <div class="control-group" id="qualSliderGroup">
+                                    <div class="control-label"><span>Compression Quality</span><span id="qualVal">80%</span></div>
+                                    <input type="range" id="qualSlider" min="5" max="100" value="80" oninput="document.getElementById('qualVal').textContent = this.value + '%'; liveCompress()">
+                                </div>
+                                <div class="control-group">
+                                    <div class="control-label"><span>Target Maximum File Size (KB)</span></div>
+                                    <input type="number" id="targetKB" placeholder="e.g. 50, 100, 200 (optional)" min="1" oninput="liveCompress()" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                    <div style="font-size:10px; color:var(--text-muted); margin-top:2px;">Leave blank to use quality slider, or enter a target file size.</div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="control-label"><span>Resolution / DPI</span><span id="compDpiVal">300 DPI</span></div>
+                                    <input type="number" id="compDpi" value="300" min="1" max="1200" placeholder="e.g. 300" oninput="document.getElementById('compDpiVal').textContent = (this.value || 300) + ' DPI'; liveCompress()" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                    <div style="font-size:10px; color:var(--text-muted); margin-top:2px;">DPI print metadata (target size automatically optimizes resolution as needed).</div>
+                                </div>
+                                <button class="btn btn-main" onclick="doCompress()" style="width:100%; margin-top:8px;">⚡ Compress Image</button>
+
+                                <!-- Before vs After Compression Stats Card -->
+                                <div id="compressStatsCard" style="background:var(--bg-light); border:1px solid var(--border-light); border-radius:8px; padding:10px; margin-top:12px; font-size:11px;">
+                                    <div style="font-weight:800; color:var(--text-color); margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
+                                        <span>📊 Compression Analysis</span>
+                                        <span id="compResBadge" style="font-size:10px; padding:2px 6px; border-radius:4px; background:rgba(31,209,249,0.15); color:var(--text-color); font-weight:700;">Standard Service</span>
+                                    </div>
+                                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; background:#ffffff; border:1px solid var(--border-light); border-radius:6px; padding:8px;">
+                                        <div>
+                                            <div style="color:var(--text-muted); font-size:10px;">Original Size</div>
+                                            <div id="compOrigStats" style="font-weight:700; color:var(--text-color); margin-top:2px;">—</div>
+                                        </div>
+                                        <div>
+                                            <div style="color:var(--text-muted); font-size:10px;">Compressed Size</div>
+                                            <div id="compNewStats" style="font-weight:700; color:#10b981; margin-top:2px;">—</div>
+                                        </div>
+                                    </div>
+                                    <div style="display:flex; justify-content:space-between; margin-top:6px; color:var(--text-muted); font-size:10px;">
+                                        <span>Pixels: <strong id="compDimStats" style="color:var(--text-color);">100% Preserved</strong></span>
+                                        <span id="compSavingsStats" style="font-weight:800; color:#10b981;">0% smaller</span>
+                                    </div>
+                                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; background:#ffffff; border:1px solid var(--border-light); border-radius:6px; padding:6px 8px; font-size:10px;">
+                                        <span style="color:var(--text-muted); font-weight:700;">Target: <strong id="compTargetLabel" style="color:var(--text-dark);">None</strong></span>
+                                        <span id="compTargetStatus" style="font-weight:800; padding:2px 6px; border-radius:4px; background:rgba(31,209,249,0.12); color:var(--text-dark);">Standard Quality</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="increaseMode" style="display:none;">
+                                <div class="control-group">
+                                    <div class="control-label"><span>Target Minimum File Size (KB)</span></div>
+                                    <input type="number" id="targetIncKB" placeholder="e.g. 500, 1000, 2000" min="1" oninput="liveIncrease()" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                </div>
+                                <div class="control-group">
+                                    <div class="control-label"><span>Output Format</span></div>
+                                    <select id="incFmt" onchange="liveIncrease()" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                        <option value="image/jpeg">JPEG</option>
+                                        <option value="image/png">PNG</option>
+                                        <option value="image/webp">WEBP</option>
+                                    </select>
+                                </div>
+                                <div class="control-group">
+                                    <div class="control-label"><span>Quality Floor</span><span id="incQualVal">95%</span></div>
+                                    <input type="range" id="incQualSlider" min="70" max="100" value="95" oninput="document.getElementById('incQualVal').textContent = this.value + '%'; liveIncrease()">
+                                </div>
+                                <button class="btn btn-main" onclick="doIncrease()" style="width:100%; margin-top:8px;">Execute File Size Boost</button>
+                            </div>
+                        </div>
+
+                        <!-- 2. RESIZE -->
+                        <div id="c-resize" style="display:none;">
+                            <div class="control-group">
+                                <div class="control-label"><span>Measurement Unit</span></div>
+                                <select id="resizeUnitSelect" onchange="onResizeUnitChange(this.value)" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                    <option value="px" selected>Pixels (px)</option>
+                                    <option value="in">Inches (in)</option>
+                                    <option value="cm">Centimeters (cm)</option>
+                                    <option value="mm">Millimeters (mm)</option>
+                                </select>
+                            </div>
+                            <div class="control-group">
+                                <div class="control-label"><span id="lblRW">Width (Pixels)</span></div>
+                                <input type="number" id="rW" min="0.01" step="any" oninput="arUpdate('w'); liveResize()" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                            </div>
+                            <div class="control-group">
+                                <div class="control-label"><span id="lblRH">Height (Pixels)</span></div>
+                                <input type="number" id="rH" min="0.01" step="any" oninput="arUpdate('h'); liveResize()" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                            </div>
+                            <label style="display:flex; align-items:center; gap:8px; font-size:12px; font-weight:700; cursor:pointer; margin-bottom:12px;">
+                                <input type="checkbox" id="keepAR" checked> Lock Aspect Ratio
+                            </label>
+                            <button class="btn btn-main" onclick="doResize()" style="width:100%;">Apply Dimensions Resize</button>
+                        </div>
+
+                        <!-- 3. CROP, FLIP & ROTATE -->
+                        <div id="c-crop" style="display:none;">
+                            <div class="control-group">
+                                <div class="control-label"><span>Measurement Unit</span></div>
+                                <select id="cropUnitSelect" onchange="setCropUnitFromSelect(this.value)" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                    <option value="px">Pixels (px)</option>
+                                    <option value="cm">Centimeters (cm)</option>
+                                    <option value="mm">Millimeters (mm)</option>
+                                </select>
+                            </div>
+                            <div class="control-group">
+                                <div class="control-label"><span>Aspect Ratio Presets</span></div>
+                                <div class="aspect-presets-grid" id="aspectPresets" style="grid-template-columns: 1fr 1fr;">
+                                    <button class="ap-btn active" onclick="setAspectPreset(0, 0, this)">Freeform</button>
+                                    <button class="ap-btn" onclick="setAspectPreset(1, 1, this)">1 : 1 Square</button>
+                                    <button class="ap-btn" onclick="setAspectPreset(3.5, 4.5, this)">3.5 : 4.5 ID Photo</button>
+                                    <button class="ap-btn" onclick="setAspectPreset(2.5, 3.5, this)">2.5 : 3.5 Stamp</button>
+                                </div>
+                            </div>
+                            <div style="display:grid; grid-template-columns:1fr auto 1fr; gap:8px; align-items:center; margin-top:8px;">
+                                <div style="min-width:0;">
+                                    <input type="number" id="cropW" placeholder="Width" oninput="onCropWHInput()" style="width:100%; min-width:0; padding:8px; border-radius:6px; border:1px solid var(--border-light); box-sizing:border-box;">
+                                </div>
+                                <button class="btn btn-accent" onclick="swapCropWH()" style="padding:8px 10px; line-height:1;" title="Swap Width & Height">⇄</button>
+                                <div style="min-width:0;">
+                                    <input type="number" id="cropH" placeholder="Height" oninput="onCropWHInput()" style="width:100%; min-width:0; padding:8px; border-radius:6px; border:1px solid var(--border-light); box-sizing:border-box;">
+                                </div>
+                            </div>
+                            <div id="cropSelInfo" style="display:none; font-size:12px; font-weight:700; color:var(--accent-purple); margin-top:6px;">
+                                Selection: <span id="cropSelText"></span>
+                            </div>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:12px;">
+                                <button class="btn btn-main" onclick="doCrop()">Execute Crop</button>
+                                <button class="btn btn-accent" onclick="resetCrop()">Clear Bounds</button>
+                            </div>
+
+                            <!-- Integrated Flip & Rotation Controls -->
+                            <div style="margin-top:16px; padding-top:14px; border-top:1px solid var(--border-light);">
+                                <div class="control-label" style="margin-bottom:8px;"><span>Flip Axis</span></div>
+                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:14px;">
+                                    <button class="btn btn-accent" onclick="cropFlip('h')" title="Mirror horizontally">↔️ Flip Horiz</button>
+                                    <button class="btn btn-accent" onclick="cropFlip('v')" title="Mirror vertically">↕️ Flip Vert</button>
+                                </div>
+
+                                <div class="control-label" style="margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+                                    <span>Rotation (-90° to +90°)</span>
+                                    <span id="cropRotAngleVal" style="font-weight:800; color:var(--accent-purple); font-size:12px;">0°</span>
+                                </div>
+
+                                <!-- -90° to +90° Slider and Direct Numeric Input -->
+                                <div style="display:grid; grid-template-columns: 1fr 64px; gap:8px; align-items:center; margin-bottom:8px;">
+                                    <input type="range" id="cropRotAngleSlider" min="-90" max="90" step="1" value="0" oninput="onCropAngleChange(this.value)" style="width:100%; accent-color:var(--accent-purple);">
+                                    <div style="display:flex; align-items:center; position:relative;">
+                                        <input type="number" id="cropRotAngleInput" min="-90" max="90" step="1" value="0" oninput="onCropAngleChange(this.value)" style="width:100%; padding:6px 4px; text-align:center; font-weight:700; border-radius:6px; border:1px solid var(--border-light); font-size:12px;">
+                                        <span style="position:absolute; right:6px; font-size:11px; font-weight:700; color:var(--text-muted); pointer-events:none;">°</span>
+                                    </div>
+                                </div>
+
+                                <!-- Angle Presets -->
+                                <div style="display:grid; grid-template-columns: repeat(7, 1fr); gap:3px; margin-bottom:8px;">
+                                    <button class="btn btn-accent" style="min-height:28px; padding:4px 1px; font-size:10px;" onclick="setCropAnglePreset(-90)">-90°</button>
+                                    <button class="btn btn-accent" style="min-height:28px; padding:4px 1px; font-size:10px;" onclick="setCropAnglePreset(-45)">-45°</button>
+                                    <button class="btn btn-accent" style="min-height:28px; padding:4px 1px; font-size:10px;" onclick="setCropAnglePreset(-15)">-15°</button>
+                                    <button class="btn btn-accent" style="min-height:28px; padding:4px 1px; font-size:10px;" onclick="setCropAnglePreset(0)">0°</button>
+                                    <button class="btn btn-accent" style="min-height:28px; padding:4px 1px; font-size:10px;" onclick="setCropAnglePreset(15)">15°</button>
+                                    <button class="btn btn-accent" style="min-height:28px; padding:4px 1px; font-size:10px;" onclick="setCropAnglePreset(45)">45°</button>
+                                    <button class="btn btn-accent" style="min-height:28px; padding:4px 1px; font-size:10px;" onclick="setCropAnglePreset(90)">90°</button>
+                                </div>
+
+                                <div style="display:grid; grid-template-columns: 1fr 1fr 1.5fr; gap:6px; margin-bottom:10px;">
+                                    <button class="btn btn-accent" style="min-height:32px; font-size:11px;" onclick="adjustCropAngleStep(-1)" title="Rotate -1°">−1°</button>
+                                    <button class="btn btn-accent" style="min-height:32px; font-size:11px;" onclick="adjustCropAngleStep(1)" title="Rotate +1°">+1°</button>
+                                    <button class="btn btn-main" style="min-height:32px; font-size:11px;" onclick="applyCropRotation()" title="Apply custom angle rotation">Apply Angle</button>
+                                </div>
+
+                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                                    <button class="btn btn-accent" onclick="cropRotate(-90)" title="Rotate 90° Counter-Clockwise">↺ 90° CCW</button>
+                                    <button class="btn btn-accent" onclick="cropRotate(90)" title="Rotate 90° Clockwise">↻ 90° CW</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. CONVERT -->
+                        <div id="c-convert" style="display:none;">
+                            <div class="control-group">
+                                <div class="control-label"><span>Target Output Format</span></div>
+                                <select id="convFmt" onchange="liveConvert()" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                    <option value="image/jpeg">JPEG (.jpg)</option>
+                                    <option value="image/png">PNG (.png)</option>
+                                    <option value="image/webp">WEBP (.webp)</option>
+                                    <option value="image/bmp">BMP (.bmp)</option>
+                                    <option value="image/gif">GIF (.gif)</option>
+                                    <option value="image/tiff">TIFF (.tiff)</option>
+                                    <option value="image/x-icon">ICO (.ico)</option>
+                                    <option value="image/avif">AVIF (.avif)</option>
+                                </select>
+                            </div>
+                            <div class="control-group">
+                                <div class="control-label"><span>Target Maximum File Size (KB, Optional)</span></div>
+                                <input type="number" id="convTargetKB" placeholder="e.g. 50, 100, 200 (optional)" min="1" oninput="liveConvert()" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                            </div>
+                            <div class="control-group">
+                                <div class="control-label"><span>Encoding Quality</span><span id="convQVal">92%</span></div>
+                                <input type="range" id="convQual" min="10" max="100" value="92" oninput="document.getElementById('convQVal').textContent = this.value + '%'; liveConvert()">
+                            </div>
+                            <button class="btn btn-main" onclick="doConvert()" style="width:100%; margin-top:8px;">Convert Format</button>
+                        </div>
+
+                        <!-- 5. BRIGHTNESS, CONTRAST, SATURATION, HUE -->
+                        <div id="c-brightness" style="display:none;">
+                            <div class="control-group">
+                                <div class="control-label"><span>Brightness</span><span id="brv">100</span>%</div>
+                                <input type="range" id="brSlider" min="0" max="250" value="100" oninput="document.getElementById('brv').textContent = this.value; liveBrightness()">
+                            </div>
+                            <div class="control-group">
+                                <div class="control-label"><span>Contrast</span><span id="ctv">100</span>%</div>
+                                <input type="range" id="ctSlider" min="0" max="250" value="100" oninput="document.getElementById('ctv').textContent = this.value; liveBrightness()">
+                            </div>
+                            <div class="control-group">
+                                <div class="control-label"><span>Saturation</span><span id="satv">100</span>%</div>
+                                <input type="range" id="satSlider" min="0" max="250" value="100" oninput="document.getElementById('satv').textContent = this.value; liveBrightness()">
+                            </div>
+                            <div class="control-group">
+                                <div class="control-label"><span>Hue Rotation</span><span id="huev">0</span>°</div>
+                                <input type="range" id="hueSlider" min="0" max="360" value="0" oninput="document.getElementById('huev').textContent = this.value; liveBrightness()">
+                            </div>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:8px;">
+                                <button class="btn btn-main" onclick="doBrightness()">Apply Adjustments</button>
+                                <button class="btn btn-accent" onclick="resetBrightness()">Reset to 100%</button>
+                            </div>
+                        </div>
+
+                        <!-- 6. WATERMARK -->
+                        <div id="c-watermark" style="display:none;">
+                            <div class="control-group">
+                                <div class="control-label"><span>Watermark Text</span></div>
+                                <input type="text" id="wmText" value="© Monu Computers" oninput="liveWatermark()" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                            </div>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                                <div class="control-group">
+                                    <div class="control-label"><span>Font Size</span></div>
+                                    <input type="number" id="wmSize" value="36" min="8" max="200" oninput="liveWatermark()" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                </div>
+                                <div class="control-group">
+                                    <div class="control-label"><span>Font Color</span></div>
+                                    <input type="color" id="wmColor" value="#ffffff" oninput="liveWatermark()" style="width:100%; height:38px; border:none; border-radius:6px; cursor:pointer;">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="control-label"><span>Opacity</span><span id="wmOpVal">80%</span></div>
+                                <input type="range" id="wmOpacity" min="5" max="100" value="80" oninput="document.getElementById('wmOpVal').textContent = this.value + '%'; liveWatermark()">
+                            </div>
+                            <div class="control-group">
+                                <div class="control-label"><span>Anchor Position</span></div>
+                                <div class="wm-pos-grid">
+                                    <button class="wm-pos-btn" data-p="tl" onclick="setWMPos(this)">↖</button>
+                                    <button class="wm-pos-btn active" data-p="tc" onclick="setWMPos(this)">↑</button>
+                                    <button class="wm-pos-btn" data-p="tr" onclick="setWMPos(this)">↗</button>
+                                    <button class="wm-pos-btn" data-p="ml" onclick="setWMPos(this)">←</button>
+                                    <button class="wm-pos-btn" data-p="mc" onclick="setWMPos(this)">•</button>
+                                    <button class="wm-pos-btn" data-p="mr" onclick="setWMPos(this)">→</button>
+                                    <button class="wm-pos-btn" data-p="bl" onclick="setWMPos(this)">↙</button>
+                                    <button class="wm-pos-btn" data-p="bc" onclick="setWMPos(this)">↓</button>
+                                    <button class="wm-pos-btn" data-p="br" onclick="setWMPos(this)">↘</button>
+                                </div>
+                            </div>
+                            <button class="btn btn-main" onclick="doWatermark()" style="width:100%;">Stamp Watermark</button>
+                        </div>
+
+                        <!-- 7. IMAGES TO PDF -->
+                        <div id="c-img2pdf" style="display:none;">
+                            <div style="font-size:12px; font-weight:800; color:var(--text-dark); margin-bottom:8px;" id="i2pCountLabel">
+                                📄 0 images in sequence
+                            </div>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;">
+                                <div class="control-group">
+                                    <div class="control-label"><span>Page Size</span></div>
+                                    <select id="i2pPageSize" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                        <option value="a4">A4 (210×297mm)</option>
+                                        <option value="letter">Letter</option>
+                                        <option value="a3">A3</option>
+                                        <option value="fit">Fit to Image</option>
+                                    </select>
+                                </div>
+                                <div class="control-group">
+                                    <div class="control-label"><span>Orientation</span></div>
+                                    <select id="i2pOrientation" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                        <option value="auto">Auto Match</option>
+                                        <option value="p">Portrait</option>
+                                        <option value="l">Landscape</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;">
+                                <div class="control-group">
+                                    <div class="control-label"><span>Margin</span></div>
+                                    <select id="i2pMargin" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                        <option value="0">Zero Margin</option>
+                                        <option value="5">Small (5mm)</option>
+                                        <option value="10">Standard (10mm)</option>
+                                    </select>
+                                </div>
+                                <div class="control-group">
+                                    <div class="control-label"><span>Quality</span></div>
+                                    <select id="i2pQuality" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                        <option value="0.92">High (92%)</option>
+                                        <option value="0.8">Balanced (80%)</option>
+                                        <option value="0.6">Compressed (60%)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;">
+                                <div class="control-group">
+                                    <div class="control-label"><span>Page Numbers</span></div>
+                                    <select id="i2pPageNum" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                        <option value="no">No</option>
+                                        <option value="yes">Bottom Center</option>
+                                    </select>
+                                </div>
+                                <div class="control-group">
+                                    <div class="control-label"><span>Target Limit</span></div>
+                                    <div style="display:flex; gap:4px;">
+                                        <input type="number" id="i2pTargetVal" placeholder="None" min="1" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                        <select id="i2pTargetUnit" style="padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                            <option value="KB">KB</option>
+                                            <option value="MB">MB</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom:10px;">
+                                <label style="display:flex; align-items:center; gap:8px; font-size:11px; font-weight:700; cursor:pointer; color:var(--text-color);">
+                                    <input type="checkbox" id="i2pDocProtection" checked>
+                                    <span>📜 Document / Text Legibility Protection (Floor: 60%)</span>
+                                </label>
+                            </div>
+
+                            <input type="file" id="i2pFileInput" multiple accept="image/*" style="display:none" onchange="loadImg2Pdf(this)">
+                            <button class="btn btn-main" id="i2pRunBtn" disabled onclick="runImg2Pdf()" style="width:100%;">Compile & Download Multi-Page PDF</button>
+
+                            <div id="i2pProgressWrap" class="editor-progress-wrap" style="margin-top:10px;">
+                                <div id="i2pProgressBar" class="editor-progress-bar"></div>
+                            </div>
+                            <div id="i2pStats" style="display:none; font-size:12px; margin-top:8px; padding:8px; background:#f4f6fa; border-radius:6px;"></div>
+                        </div>
+
+                        <!-- 8. PDF OPTIMIZER -->
+                        <div id="c-pdfcompress" style="display:none;">
+                            <div class="sm-tabs" id="pdfModeTabs">
+                                <button class="sm-tab active" onclick="setPdfMode('compress', this)">Compress PDF</button>
+                                <button class="sm-tab" onclick="setPdfMode('increase', this)">Increase PDF</button>
+                            </div>
+
+                            <div id="pdfCompressSettings">
+                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                                    <div class="control-group">
+                                        <div class="control-label"><span>DPI Preset</span></div>
+                                        <select id="pdfQualPreset" onchange="updatePdfEstimate()" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                            <option value="screen">Screen (72 DPI)</option>
+                                            <option value="ebook" selected>eBook (150 DPI)</option>
+                                            <option value="printer">Print (300 DPI)</option>
+                                        </select>
+                                    </div>
+                                    <div class="control-group">
+                                        <div class="control-label"><span>JPEG Quality</span></div>
+                                        <select id="pdfJpegQual" onchange="updatePdfEstimate()" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                            <option value="0.9">Maximum (90%)</option>
+                                            <option value="0.75" selected>Standard (75%)</option>
+                                            <option value="0.5">High Compression (50%)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="control-group" style="margin-top:8px;">
+                                    <div class="control-label"><span>Target PDF File Size (Optional)</span></div>
+                                    <div style="display:flex; gap:4px;">
+                                        <input type="number" id="pdfTargetVal" placeholder="Target e.g. 500" min="1" oninput="updatePdfEstimate()" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                        <select id="pdfTargetUnit" onchange="updatePdfEstimate()" style="padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                            <option value="KB">KB</option>
+                                            <option value="MB">MB</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div style="margin-top:8px; margin-bottom:4px;">
+                                    <label style="display:flex; align-items:center; gap:8px; font-size:11px; font-weight:700; cursor:pointer; color:var(--text-color);">
+                                        <input type="checkbox" id="pdfDocProtection" checked onchange="updatePdfEstimate()">
+                                        <span>📜 Document & Text Protection (Quality Floor: 60%)</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div id="pdfIncreaseSettings" style="display:none;">
+                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                                    <div class="control-group">
+                                        <div class="control-label"><span>Rendering DPI</span></div>
+                                        <select id="pdfIncDpi" onchange="updatePdfEstimate()" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                            <option value="300" selected>300 DPI</option>
+                                            <option value="450">450 DPI</option>
+                                            <option value="600">600 DPI</option>
+                                        </select>
+                                    </div>
+                                    <div class="control-group">
+                                        <div class="control-label"><span>Quality</span></div>
+                                        <select id="pdfIncJpegQual" onchange="updatePdfEstimate()" style="width:100%; padding:8px; border-radius:6px; border:1px solid var(--border-light);">
+                                            <option value="1.0" selected>Maximum 100%</option>
+                                            <option value="0.95">95%</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-main" id="pdfRunBtn" disabled onclick="runPDF()" style="width:100%; margin-top:8px;">Execute PDF Processing</button>
+
+                            <div id="pdfProcessWrap" style="display:none; margin-top:10px;">
+                                <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:4px;">
+                                    <span id="pdfProcLabel">Processing...</span>
+                                    <span id="pdfProcPct">0%</span>
+                                </div>
+                                <div class="editor-progress-wrap show">
+                                    <div id="pdfProcBar" class="editor-progress-bar"></div>
+                                </div>
+                                <div id="pdfProcSub" style="font-size:10px; color:var(--text-muted); margin-top:3px;"></div>
+                            </div>
+
+                            <div id="pdfResultCard" style="display:none; margin-top:12px; background:#f4f6fa; border:1px solid var(--border-light); border-radius:8px; padding:10px;">
+                                <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700;">
+                                    <span>Orig: <span id="pdfResOrig"></span></span>
+                                    <span>New: <span id="pdfResNew"></span></span>
+                                    <span id="pdfResChange"></span>
+                                </div>
+                                <button class="btn btn-success" id="pdfDownloadBtn" onclick="downloadPDF()" style="width:100%; margin-top:8px;">⬇️ Download Optimized PDF</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Sticky Action Strip -->
+                    <div class="editor-actions-strip" style="padding: 12px 18px; background: #fafbfe;">
+                        <button class="btn btn-success" id="btnEditorDownload" onclick="doEditorDownload()">⬇️ Download Image</button>
+                        <button class="btn btn-purple" id="btnSyncToScanner" onclick="syncEditorToScanner(); MonuRouter.navigateTo('/document-studio')">📥 Send to Document Studio</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Editor Status Footer -->
+            <div class="status-bar-wrap">
+                <span class="status-bar ok" id="editorStatusBar">Ready. Select any tool from the toolbar above.</span>
+                <div class="status-info-cluster" id="editorStatusInfoCluster">
+                    <span id="editorInfoSize">Size: —</span>
+                    <span class="status-info-divider">|</span>
+                    <span id="editorInfoDim">Dimensions: No Image Loaded</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- A4 Document Print Preview Modal -->
+<div class="doc-print-modal" id="doc-print-modal" aria-hidden="true">
+    <div class="doc-print-toolbar">
+        <h3>A4 Print Preview Canvas (210 × 297 mm)</h3>
+        <div class="doc-print-tools">
+            <label style="color:#353535; font-size:12px; font-weight: 700;">Scale Offset 
+                <input type="range" id="doc-print-scale" min="20" max="180" value="100" oninput="updateDocPrintPreview()">
+            </label>
+            <button class="modal-btn secondary" onclick="closeDocPrintPreview()">Cancel</button>
+            <button class="modal-btn" onclick="confirmDocPrintPreview()">Trigger System Print</button>
+        </div>
+    </div>
+    <div class="doc-print-stage">
+        <div class="a4-page-preview" id="a4-page-preview">
+            <img id="doc-print-img" alt="Print preview page image asset">
+        </div>
+    </div>
+</div>
+
+<!-- Universal Image Download Filename Modal -->
+<div class="dl-filename-modal" id="dl-filename-modal" aria-hidden="true" style="display:none;">
+    <div class="dl-modal-backdrop" onclick="closeDownloadFilenameModal()"></div>
+    <div class="dl-modal-card">
+        <div class="dl-modal-header">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size: 20px;">💾</span>
+                <h3 style="margin:0; font-size:16px; font-weight:800; color:var(--text-dark);">Download Image</h3>
+            </div>
+            <button class="dl-modal-close" onclick="closeDownloadFilenameModal()" title="Close">&times;</button>
+        </div>
+        <div class="dl-modal-body">
+            <p style="margin:0 0 14px 0; font-size:12.5px; color:var(--text-muted); line-height:1.4;">
+                Specify a file name and format before downloading:
+            </p>
+            <div style="display:grid; grid-template-columns: 1fr 130px; gap:8px; align-items:center;">
+                <input type="text" id="dlModalFilenameInput" placeholder="Enter file name" spellcheck="false" autocomplete="off" onkeydown="if(event.key==='Enter') confirmDownloadFilenameModal()" style="width:100%; padding:10px 12px; border-radius:6px; border:1px solid var(--border-light); font-weight:600; font-size:13px; box-sizing:border-box;">
+                <select id="dlModalExtSelect" onchange="onDownloadExtChange(this.value)" style="width:100%; padding:10px 8px; border-radius:6px; border:1px solid var(--border-light); font-weight:700; font-size:13px; background:#f8fafc; cursor:pointer; box-sizing:border-box;">
+                    <option value="jpg">JPG (.jpg)</option>
+                    <option value="png">PNG (.png)</option>
+                    <option value="webp">WEBP (.webp)</option>
+                    <option value="pdf">PDF (.pdf)</option>
+                    <option value="bmp">BMP (.bmp)</option>
+                    <option value="tiff">TIFF (.tiff)</option>
+                    <option value="gif">GIF (.gif)</option>
+                    <option value="avif">AVIF (.avif)</option>
+                </select>
+            </div>
+            <div id="dlModalMetaInfo" style="margin-top:10px; font-size:11.5px; color:var(--text-muted); display:flex; justify-content:space-between;">
+                <span id="dlModalDim">Dimensions: —</span>
+                <span id="dlModalEstSize">Estimated: —</span>
+            </div>
+        </div>
+        <div class="dl-modal-footer">
+            <button class="modal-btn secondary" type="button" onclick="closeDownloadFilenameModal()">Cancel</button>
+            <button class="modal-btn" id="dlModalConfirmBtn" type="button" onclick="confirmDownloadFilenameModal()">⬇️ Save & Download</button>
+        </div>
+    </div>
+</div>
+
+
+<canvas id="canvas-hidden" style="display:none;"></canvas>
+<div id="print-area"></div>
+
+<!-- Core Engine Scripts -->
+<script src="/browser-image-compression.js"></script>
+<script src="/smart-optimizer.js"></script>
+<script src="/script.js"></script>
+<script src="/editor.js"></script>
+<script src="/session-manager.js"></script>
+    <script src="/site-router.js"></script>
+<script src="/pwa-controller.js"></script>
+</body>
+</html>

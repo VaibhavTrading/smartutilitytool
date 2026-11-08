@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy & Local Data Transparency | MONU COMPUTERS</title>
+    <meta name="description" content="Detailed disclosure of MONU COMPUTERS' client-side processing architecture, local IndexedDB persistence, data deletion instructions, and AdSense disclosures." />
+    <link rel="canonical" href="https://YOUR_DOMAIN_HERE/privacy-policy" />
+    
+    <!-- OpenGraph Metadata -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="MONU COMPUTERS" />
+    <meta property="og:title" content="Privacy Policy & Local Data Transparency | MONU COMPUTERS" />
+    <meta property="og:description" content="Detailed disclosure of MONU COMPUTERS' client-side processing architecture, local IndexedDB persistence, data deletion instructions, and AdSense disclosures." />
+    <meta property="og:url" content="https://YOUR_DOMAIN_HERE/privacy-policy" />
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Privacy Policy & Local Data Transparency | MONU COMPUTERS" />
+    <meta name="twitter:description" content="Detailed disclosure of MONU COMPUTERS' client-side processing architecture, local IndexedDB persistence, data deletion instructions, and AdSense disclosures." />
+
+    <!-- Schema.org Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://YOUR_DOMAIN_HERE/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Privacy Policy",
+              "item": "https://YOUR_DOMAIN_HERE/privacy-policy"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <!-- PWA & Offline Support -->
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="theme-color" content="#4338ca">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="MONU Studio">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="/icon.svg">
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/site-config.js"></script>
+<link rel="manifest" href="/manifest.webmanifest"></head>
+<body>
+<div class="dashboard">
+
+    <!-- UNIVERSAL WEBSITE NAVIGATION HEADER -->
+    <header class="site-header">
+        <div class="site-nav-container">
+            <a href="/" class="site-brand" data-link title="MONU COMPUTERS Home">
+                <div class="site-logo-icon">💻</div>
+                <div class="site-brand-text">
+                    <h1>MONU COMPUTERS</h1>
+                    <span>Free Online Image Editing & Document Tools</span>
+                </div>
+            </a>
+            
+            <nav aria-label="Main Navigation">
+                <ul class="site-nav-links">
+                    <li><a href="/" class="site-nav-link" data-link>Home</a></li>
+                    <li><a href="/document-studio" class="site-nav-link" data-link>Document Studio</a></li>
+                    <li><a href="/id-card-studio" class="site-nav-link" data-link>ID Card Studio</a></li>
+                    <li><a href="/image-pdf-editor" class="site-nav-link" data-link>Image & PDF Editor</a></li>
+                    <li><a href="/about-us" class="site-nav-link" data-link>About Us</a></li>
+                    <li><a href="/contact-us" class="site-nav-link" data-link>Contact Us</a></li>
+                </ul>
+            </nav>
+
+            <div class="site-nav-actions">
+                <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu">
+                    ☰
+                </button>
+            </div>
+        </div>
+
+        <div class="mobile-nav-drawer" id="mobileNavDrawer">
+            <a href="/" class="site-nav-link" data-link>🏠 Home</a>
+            <a href="/document-studio" class="site-nav-link" data-link>📄 Document Studio</a>
+            <a href="/id-card-studio" class="site-nav-link" data-link>🪪 ID Card Studio</a>
+            <a href="/image-pdf-editor" class="site-nav-link" data-link>🖼️ Image & PDF Editor</a>
+            <a href="/about-us" class="site-nav-link" data-link>ℹ️ About Us</a>
+            <a href="/contact-us" class="site-nav-link" data-link>✉️ Contact Us</a>
+        </div>
+    </header>
+
+    <!-- PRIVACY POLICY & LOCAL DATA CONTROL -->
+    <main class="page-view" id="page-privacy">
+        <div class="tool-page-layout-wrapper">
+            <aside class="side-ad-space left-ad" aria-label="Advertisement">
+                <div class="adsense-card skyscraper"></div>
+            </aside>
+            <div class="central-tool-content">
+        <div class="legal-page-header">
+            <div class="container-narrow">
+                <div class="breadcrumb-nav" style="justify-content: center;">
+                    <a href="/" class="breadcrumb-link" data-link>Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-current">Privacy Policy</span>
+                </div>
+                <h1>Privacy Policy & Data Transparency</h1>
+                <p>Last Audited & Updated: November 2026</p>
+            </div>
+        </div>
+
+        <div class="legal-document-body">
+            <section class="legal-section">
+                <h2>1. Introduction</h2>
+                <p>
+                    MONU COMPUTERS ("We", "Us", "Our", or "Platform") is committed to protecting your privacy, data security, and transparency. This Privacy Policy details how MONU COMPUTERS handles technical data, local browser storage, temporary server files, and third-party advertising services when you visit or use our online document, image, and PDF editing utilities.
+                </p>
+            </section>
+
+            <section class="legal-section">
+                <h2>2. Scope of This Privacy Policy</h2>
+                <p>
+                    This Privacy Policy applies to all pages, features, studio tools, and subdomains hosted under MONU COMPUTERS, including Document Studio, ID Card Studio, and Image & PDF Editor. It governs both in-browser client operations and short-lived temporary backend processing sessions.
+                </p>
+            </section>
+
+            <section class="legal-section">
+                <h2>3. Information We Collect</h2>
+                <p>
+                    MONU COMPUTERS operates without user accounts or mandatory registration. Depending on how you interact with the Platform, we collect:
+                </p>
+                <ul>
+                    <li><strong>Technical Log Data:</strong> Standard HTTP request data logged by web hosting servers, including IP address, browser type, operating system, referring URL, date/time stamps, and request paths.</li>
+                    <li><strong>Temporary Upload Metadata:</strong> File name, file size, MIME format, and session validation tokens generated when you submit a file for server-side processing.</li>
+                    <li><strong>Support Inquiries:</strong> Name, email address, subject, and message content voluntarily provided when contacting us via email or contact form.</li>
+                </ul>
+            </section>
+
+            <section class="legal-section">
+                <h2>4. Information We Do Not Collect</h2>
+                <p>
+                    Factually and strictly:
+                </p>
+                <ul>
+                    <li>We do <strong>NOT</strong> require user registration, passwords, or personal profiles.</li>
+                    <li>We do <strong>NOT</strong> extract, store, or sell personal identity information (e.g. Aadhaar, PAN, SSN, passport numbers) contained within documents you edit.</li>
+                    <li>We do <strong>NOT</strong> maintain permanent server archives, user databases, or long-term file repositories of your documents or photos.</li>
+                </ul>
+            </section>
+
+            <section class="legal-section">
+                <h2>5. How We Use Information</h2>
+                <p>
+                    Collected technical information is used strictly to:
+                </p>
+                <ul>
+                    <li>Execute requested document enhancement, perspective warping, ID card framing, image compression, and PDF compilation tasks.</li>
+                    <li>Maintain platform operational stability, diagnostic logging, abuse protection, and rate-limiting enforcement.</li>
+                    <li>Deliver non-disruptive third-party advertisements via Google AdSense to keep our services free for all users.</li>
+                    <li>Respond to user feedback, technical bug reports, and legal/privacy inquiries.</li>
+                </ul>
+            </section>
+
+            <section class="legal-section">
+                <h2>6. Image and Document Processing Architecture (Hybrid Model)</h2>
+                <p>
+                    MONU COMPUTERS utilizes a dual processing architecture designed to maximize user privacy while ensuring high-performance capabilities. Processing operations are categorized into <strong>Browser-Based Execution</strong> and <strong>Temporary Backend Processing</strong>.
+                </p>
+            </section>
+
+            <section class="legal-section">
+                <h2>7. Browser-Based Processing (Client-Side Privacy)</h2>
+                <p>
+                    Core image operations execute directly inside your device's web browser using HTML5 Canvas, WebGL, and OpenCV.js WebAssembly:
+                </p>
+                <ul>
+                    <li>Uploaded files for browser-based operations remain entirely within your device memory.</li>
+                    <li>No original image or processed output is transmitted to our servers during browser-side processing.</li>
+                    <li>To prevent loss of ongoing work when switching tabs or refreshing, local canvas state, perspective corners, and recent project thumbnails are saved in your browser's local <strong>IndexedDB</strong> databases (<code>Monu_DocIDStudio_DB</code> and <code>Monu_ImagePDFEditor_DB</code>).</li>
+                    <li>This persistent browser storage remains under your exclusive device control and can be cleared at any time using our built-in Data Control panel below or browser settings.</li>
+                </ul>
+            </section>
+
+            <!-- Interactive Privacy & Local Data Management Panel -->
+            <section class="data-control-panel">
+                <h3><span>🛡️</span> Privacy & Local Data Control</h3>
+                <p class="data-control-desc">
+                    You have complete control over your local browser data. Below is a live summary of data currently stored in your browser's IndexedDB by MONU COMPUTERS. You can permanently erase all stored projects, cached documents, and ID sets at any time.
+                </p>
+
+                <div class="data-stats-grid">
+                    <div class="data-stat-card">
+                        <div class="data-stat-number" id="privacy-doc-count">0</div>
+                        <div class="data-stat-label">Scanned Documents</div>
+                    </div>
+                    <div class="data-stat-card">
+                        <div class="data-stat-number" id="privacy-id-count">0</div>
+                        <div class="data-stat-label">Saved ID Card Sets</div>
+                    </div>
+                    <div class="data-stat-card">
+                        <div class="data-stat-number" id="privacy-editor-count">0</div>
+                        <div class="data-stat-label">Editor Projects</div>
+                    </div>
+                </div>
+
+                <div class="data-action-row">
+                    <button type="button" class="btn-secondary-outline" onclick="MonuRouter.refreshPrivacyStorageStats()">
+                        🔄 Refresh Storage Stats
+                    </button>
+                    <button type="button" class="btn-secondary-outline" onclick="window.PWAController && window.PWAController.openOfflineModal()">
+                        ⚡ Inspect Offline Cache
+                    </button>
+                    <button type="button" class="btn-danger-outline" onclick="MonuRouter.promptClearAllData()">
+                        🗑️ Clear All Saved Data & Reset Studio
+                    </button>
+                </div>
+                <div id="privacy-clear-status" style="margin-top: 12px; font-size: 13px;"></div>
+            </section>
+
+            <section class="legal-section" id="temporary-session-retention">
+                <h2>8. Temporary Backend Processing and Storage</h2>
+                <p>
+                    For features that require temporary server processing:
+                </p>
+                <ul>
+                    <li>A temporary backend processing session starts automatically ONLY after a file is uploaded to the server.</li>
+                    <li>Every session is assigned a unique, unpredictable session identifier and security token.</li>
+                    <li>All temporary backend sessions have a <strong>fixed maximum lifetime of 20 minutes</strong> (and a 10-minute inactivity limit).</li>
+                    <li>Additional file uploads during an active session attach to the existing session but do <strong>NOT</strong> restart or extend the original 20-minute expiration time.</li>
+                    <li>Expired sessions are blocked from accessing previous temporary file links or API endpoints.</li>
+                </ul>
+            </section>
+
+            <section class="legal-section">
+                <h2>9. Automatic File Deletion & Infrastructure Retention Disclosures</h2>
+                <p>
+                    When a temporary backend session expires (after 20 minutes), an automated server background job permanently deletes all original uploaded files, processed outputs, thumbnails, and temporary session metadata.
+                </p>
+                <p>
+                    <em>Infrastructure Note:</em> While files are purged from active server memory and storage immediately upon session expiration, standard server hosting ephemeral logs and system backup snapshots may retain encrypted system records for a limited technical period before automated overwriting, as dictated by cloud infrastructure retention schedules.
+                </p>
+            </section>
+
+            <section class="legal-section">
+                <h2>10. Manual File Deletion Methods</h2>
+                <p>
+                    You maintain immediate control to delete files at any time:
+                </p>
+                <ol style="padding-left: 20px; color: #475569; line-height: 1.7; font-size: 15px;">
+                    <li><strong>Backend Session Deletion:</strong> Click <strong>"🗑️ Delete Now"</strong> in the active session status bar during server processing. Upon confirmation, a purge request is sent to the server, instantly destroying temporary files and invalidating session tokens.</li>
+                    <li><strong>Browser Data Clearing:</strong> Click <strong>"Clear All Saved Data & Reset Studio"</strong> in the panel above to instantly erase local IndexedDB cached documents, ID sets, and editor projects from your computer's browser storage.</li>
+                </ol>
+            </section>
+
+            <section class="legal-section">
+                <h2>11. Cookies and Web Storage Technologies</h2>
+                <p>
+                    MONU COMPUTERS uses essential web storage (HTML5 LocalStorage, SessionStorage, IndexedDB) to manage application state and dark mode preferences. We do not use first-party tracking cookies to build personal user profiles.
+                </p>
+            </section>
+
+            <section class="legal-section">
+                <h2>12. Google AdSense & Advertising Partners</h2>
+                <p>
+                    MONU COMPUTERS is monetized through advertisements served by Google AdSense and its advertising partners:
+                </p>
+                <ul>
+                    <li>Google uses cookies (such as the DoubleClick cookie) to serve ads based on your visit to this site and other websites on the Internet.</li>
+                    <li>Google's advertising cookies allow Google and its partners to serve personalized or non-personalized advertisements based on user browsing history.</li>
+                    <li>You may opt out of personalized advertising at any time by visiting <a href="https://adssettings.google.com/" target="_blank" rel="noopener noreferrer">Google Ads Settings</a> or <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer">www.aboutads.info</a>.</li>
+                    <li>Advertising networks do <strong>NOT</strong> receive access to your uploaded images, scanned documents, or processed files.</li>
+                </ul>
+            </section>
+
+            <section class="legal-section">
+                <h2>13. Web Analytics and Technical Diagnostics</h2>
+                <p>
+                    We may measure platform usage trends using privacy-compliant server-side metrics or non-intrusive analytics. Technical diagnostics help us monitor bandwidth usage, detect broken features, optimize page load speed, and prevent security attacks.
+                </p>
+            </section>
+
+            <section class="legal-section">
+                <h2>14. Data Sharing and Disclosure</h2>
+                <p>
+                    MONU COMPUTERS will <strong>NEVER sell, rent, trade, or monetize</strong> your documents, photos, personal information, or support messages to third parties. Data is disclosed only under strict legal necessity:
+                </p>
+                <ul>
+                    <li>To comply with a valid court order, subpoena, or legally binding governmental request under applicable law.</li>
+                    <li>To enforce our Terms and Conditions or protect platform security and infrastructure against malicious attacks.</li>
+                </ul>
+            </section>
+
+            <section class="legal-section">
+                <h2>15. Data Security Measures</h2>
+                <p>
+                    We employ industry-standard technical security practices:
+                </p>
+                <ul>
+                    <li>HTTPS/TLS encryption for all data in transit between your browser and our servers.</li>
+                    <li>Unpredictable cryptographically generated session identifiers and validation tokens.</li>
+                    <li>Server-side file type, file size, and payload validation to prevent malicious code execution.</li>
+                    <li>Automated 10-second interval purge routines that eliminate expired backend sessions.</li>
+                </ul>
+            </section>
+
+            <section class="legal-section">
+                <h2>16. Data Retention Summary</h2>
+                <table style="width:100%; border-collapse:collapse; margin-top:12px; font-size:13.5px; color:#334155;">
+                    <thead>
+                        <tr style="background:#f1f5f9; text-align:left;">
+                            <th style="padding:10px; border:1px solid #cbd5e1;">Data Category</th>
+                            <th style="padding:10px; border:1px solid #cbd5e1;">Storage Location</th>
+                            <th style="padding:10px; border:1px solid #cbd5e1;">Retention Period</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding:10px; border:1px solid #cbd5e1;">Browser Studio Work</td>
+                            <td style="padding:10px; border:1px solid #cbd5e1;">Device IndexedDB</td>
+                            <td style="padding:10px; border:1px solid #cbd5e1;">Until cleared by user in-app or browser settings</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:10px; border:1px solid #cbd5e1;">Temporary Backend Files</td>
+                            <td style="padding:10px; border:1px solid #cbd5e1;">Server Temporary Memory</td>
+                            <td style="padding:10px; border:1px solid #cbd5e1;">Fixed 20 minutes max (or immediate via "Delete Now")</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:10px; border:1px solid #cbd5e1;">Support Emails</td>
+                            <td style="padding:10px; border:1px solid #cbd5e1;">Support Mailbox</td>
+                            <td style="padding:10px; border:1px solid #cbd5e1;">Retained as necessary to resolve user inquiry</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="legal-section">
+                <h2>17. User Privacy Rights</h2>
+                <p>
+                    In accordance with applicable privacy laws, including the Indian Digital Personal Data Protection Act (DPDPA), 2023, and international privacy standards such as GDPR where applicable, you have the right to:
+                </p>
+                <ul>
+                    <li>Request confirmation regarding whether temporary server data associated with you is being processed.</li>
+                    <li>Request immediate deletion or erasure of your temporary server session data via "Delete Now".</li>
+                    <li>Clear all local browser-stored document data at any time via our built-in Data Control panel.</li>
+                    <li>Withdraw consent or opt out of personalized advertising cookies via Google Ads Settings.</li>
+                    <li>Lodge a privacy complaint or grievance with our designated Privacy Officer.</li>
+                </ul>
+            </section>
+
+            <section class="legal-section">
+                <h2>18. Children's Privacy</h2>
+                <p>
+                    MONU COMPUTERS is a general utility site not directed to children. We do not knowingly collect personal information from individuals under applicable age thresholds (such as children under 13 in the US or minors without parental consent under Indian DPDPA rules). If you believe a child has submitted personal data through our support form, please contact us for immediate deletion.
+                </p>
+            </section>
+
+            <section class="legal-section">
+                <h2>19. International Data Transfers</h2>
+                <p>
+                    Our web hosting servers and CDN nodes may process HTTP requests globally to ensure optimal latency. By using MONU COMPUTERS, you acknowledge that technical processing may occur on secure hosting infrastructure located in India or internationally, subject to standard cloud security protections.
+                </p>
+            </section>
+
+            <section class="legal-section">
+                <h2>20. Privacy Complaints and Grievance Redressal</h2>
+                <p>
+                    In compliance with the Information Technology Act, 2000 and DPDPA Rules, 2025, any complaints, concerns, or grievance requests regarding data handling should be directed to our designated Privacy & Grievance Officer:
+                </p>
+                <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:10px; padding:16px; margin-top:10px;">
+                    <strong>Privacy & Grievance Officer:</strong><br>
+                    Email: <a href="mailto:vaibhav.dewangan499@gmail.com" style="color:#4f46e5; font-weight:700;">vaibhav.dewangan499@gmail.com</a><br>
+                    Response Time: Acknowledgement within 24–48 business hours.
+                </div>
+            </section>
+
+            <section class="legal-section">
+                <h2>21. Changes to This Privacy Policy</h2>
+                <p>
+                    We reserve the right to modify or update this Privacy Policy at any time. Any changes will be published directly on this page with an updated audit timestamp. We encourage you to review this page periodically.
+                </p>
+            </section>
+
+            <section class="legal-section">
+                <h2>22. Contact Information</h2>
+                <p>
+                    For general questions regarding this Privacy Policy or platform security practices, please contact us at: <a href="mailto:vaibhav.dewangan499@gmail.com" style="color:#4f46e5; font-weight:700;">vaibhav.dewangan499@gmail.com</a>.
+                </p>
+            </section>
+        </div>
+    </div>
+            <aside class="side-ad-space right-ad" aria-label="Advertisement">
+                <div class="adsense-card skyscraper"></div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Clear Data Confirmation Modal Dialog -->
+    <div id="confirmClearDataModal" class="confirm-modal-overlay" style="display: none;">
+        <div class="confirm-modal-box">
+            <div class="confirm-modal-title">
+                <span>⚠️</span> Confirm Permanent Data Deletion
+            </div>
+            <div class="confirm-modal-body">
+                Are you sure you want to delete all locally stored documents, ID card pairs, and editor projects from your browser?
+                <br><br>
+                This action will permanently delete <strong>Monu_DocIDStudio_DB</strong> and <strong>Monu_ImagePDFEditor_DB</strong> and reset all active studio canvases.
+                <br><br>
+                <em>This action cannot be undone. Any files you have already downloaded to your device will remain safe.</em>
+            </div>
+            <div class="confirm-modal-actions">
+                <button type="button" class="btn-secondary-outline" onclick="MonuRouter.closeClearDataModal()">Cancel</button>
+                <button type="button" class="btn-confirm-delete" onclick="MonuRouter.executeClearAllData()">Yes, Delete All Data</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- UNIVERSAL WEBSITE FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h2>MONU COMPUTERS</h2>
+                    <p>Free, private, browser-based online tools for scanned document enhancement, dual-slot ID card print framing, image compression, resizing, format conversion, and PDF management.</p>
+                    <div class="footer-badge">
+                        <span>🛡️ In-Browser Processing & Selected Offline Support</span>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Our Tools</h3>
+                    <ul class="footer-nav-list">
+                        <li><a href="/document-studio" class="footer-link" data-link>Document Studio</a></li>
+                        <li><a href="/id-card-studio" class="footer-link" data-link>ID Card Studio</a></li>
+                        <li><a href="/image-pdf-editor" class="footer-link" data-link>Image & PDF Editor</a></li>
+                        <li><a href="/document-studio#doc-tutorial" class="footer-link" data-link>Scanner Tutorial</a></li>
+                        <li><a href="/id-card-studio#id-tutorial" class="footer-link" data-link>ID Print Guide</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Legal & Privacy</h3>
+                    <ul class="footer-nav-list">
+                        <li><a href="/privacy-policy" class="footer-link" data-link>Privacy Policy</a></li>
+                        <li><a href="/terms-and-conditions" class="footer-link" data-link>Terms and Conditions</a></li>
+                        <li><a href="/copyright-policy" class="footer-link" data-link>Copyright Policy</a></li>
+                        <li><a href="/disclaimer" class="footer-link" data-link>Disclaimer</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Support & Help</h3>
+                    <ul class="footer-nav-list">
+                        <li><a href="/about-us" class="footer-link" data-link>About Us</a></li>
+                        <li><a href="/contact-us" class="footer-link" data-link>Contact Us</a></li>
+                        <li><a href="/#explore-tools" class="footer-link" data-link>Explore Tools</a></li>
+                        <li><a href="mailto:vaibhav.dewangan499@gmail.com">vaibhav.dewangan499@gmail.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div>
+                    © <span id="current-year">2026</span> <strong>MONU COMPUTERS</strong>. All Rights Reserved.
+                </div>
+                <div style="display: flex; gap: 16px;">
+                    <a href="/privacy-policy" class="footer-link" data-link>Privacy</a>
+                    <a href="/terms-and-conditions" class="footer-link" data-link>Terms</a>
+                    <a href="/disclaimer" class="footer-link" data-link>Disclaimer</a>
+                    <a href="/contact-us" class="footer-link" data-link>Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+<!-- Core Engine Scripts -->
+<script src="/browser-image-compression.js"></script>
+<script src="/smart-optimizer.js"></script>
+<script src="/script.js"></script>
+<script src="/editor.js"></script>
+<script src="/session-manager.js"></script>
+    <script src="/site-router.js"></script>
+<script src="/pwa-controller.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b" />
+      <stop offset="50%" stop-color="#312e81" />
+      <stop offset="100%" stop-color="#4338ca" />
+    </linearGradient>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1fd1f9" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="100" fill="url(#bgGrad)" />
+
+  <!-- Ambient Center Glow -->
+  <circle cx="256" cy="256" r="160" fill="#1fd1f9" opacity="0.15" filter="url(#glow)" />
+
+  <!-- Computer Monitor Frame -->
+  <rect x="100" y="90" width="312" height="230" rx="20" fill="#0f172a" stroke="url(#cyanGrad)" stroke-width="12" />
+
+  <!-- Document Sheet -->
+  <path d="M 175 130 L 290 130 L 335 175 L 335 285 L 175 285 Z" fill="#f8fafc" />
+  <!-- Folded Corner -->
+  <path d="M 290 130 L 290 175 L 335 175 Z" fill="#cbd5e1" />
+  
+  <!-- Text lines on Document -->
+  <line x1="200" y1="170" x2="270" y2="170" stroke="#94a3b8" stroke-width="6" stroke-linecap="round" />
+  <!-- Scanning Laser Line -->
+  <line x1="165" y1="210" x2="345" y2="210" stroke="#10b981" stroke-width="7" stroke-linecap="round" filter="url(#glow)" />
+  <line x1="200" y1="245" x2="310" y2="245" stroke="#94a3b8" stroke-width="6" stroke-linecap="round" />
+  <line x1="200" y1="265" x2="260" y2="265" stroke="#cbd5e1" stroke-width="5" stroke-linecap="round" />
+
+  <!-- Monitor Stand -->
+  <rect x="236" y="320" width="40" height="45" fill="#94a3b8" rx="4" />
+  <ellipse cx="256" cy="370" rx="80" ry="14" fill="url(#cyanGrad)" />
+
+  <!-- 100% Offline Badge -->
+  <g transform="translate(350, 340)">
+    <circle cx="25" cy="25" r="32" fill="#10b981" stroke="#ffffff" stroke-width="4" filter="url(#glow)" />
+    <!-- Checkmark & Offline symbol -->
+    <path d="M 12 26 L 21 35 L 38 17" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+</svg>

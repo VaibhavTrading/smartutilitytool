@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  MONU COMPUTERS - SITEMAP TEMPLATE
+  
+  IMPORTANT DEPLOYMENT INSTRUCTION:
+  You have not purchased your final domain yet. Once you purchase and configure
+  your production domain (e.g., 'https://www.yourdomain.com'), replace all
+  instances of 'https://YOUR_DOMAIN_HERE' with your real URL before submitting
+  this file to Google Search Console and Google AdSense.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/document-studio</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/id-card-studio</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/image-pdf-editor</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/about</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/about-us</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/contact</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/contact-us</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/privacy-policy</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/terms-and-conditions</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/copyright-policy</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://YOUR_DOMAIN_HERE/disclaimer</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+</urlset>

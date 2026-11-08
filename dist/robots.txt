@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# PRODUCTION LAUNCH NOTICE:
+# Update the Sitemap URL below once you have purchased and configured your domain:
+# Sitemap: https://YOUR_DOMAIN_HERE/sitemap.xml
